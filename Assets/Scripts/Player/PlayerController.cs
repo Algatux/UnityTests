@@ -29,11 +29,13 @@ public class PlayerController : MonoBehaviour
     private float yRotation = 0f;
     private InputHandler inputHandler;
     private CharacterController controller;
+    private PlayerProperties properties;
 
     private void Awake()
     {
         inputHandler = GetComponent<InputHandler>();
         controller = GetComponent<CharacterController>();
+        properties = GetComponent<PlayerProperties>(); 
     }
 
     // Start is called before the first frame update
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdatePlayerProperties();
         UpdatePlayerGravity();
         UpdatePlayerMovement();
     }
@@ -81,6 +84,19 @@ public class PlayerController : MonoBehaviour
         }
         
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void UpdatePlayerProperties()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            properties.TakeDamage(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            properties.UseMana(5);
+        }
     }
 
 }
